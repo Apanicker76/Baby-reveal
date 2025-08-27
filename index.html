@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Panicker's 
-    new Panic Button</title>
+  <title>Baby Reveal Countdown</title>
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -32,18 +31,64 @@
       border-radius: 15px;
     }
     canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
-  </style>
+#guess-buttons {
+  margin-top: 30px;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 20px;
+  border-radius: 15px;
+}
+
+#guess-buttons p {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+#guess-buttons button {
+  font-size: 1.5rem;
+  padding: 10px 20px;
+  margin: 10px;
+  cursor: pointer;
+  border-radius: 10px;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+button.boy {
+  background-color: #2196f3;
+  color: white;
+}
+
+button.boy:hover {
+  background-color: #1976d2;
+}
+
+button.girl {
+  background-color: #e91e63;
+  color: white;
+}
+
+button.girl:hover {
+  background-color: #c2185b;
+}  
+</style>
 </head>
 <body>
   <h1>Baby Reveal Countdown 🎉</h1>
   <div id="countdown"></div>
-  <div id="reveal">It’s a Boyyyyy !!!! 💖</div>
+  <div id="reveal">It’s a GIRL 💖</div>
+<!-- Step 4: Voting buttons -->
+<div id="guess-buttons">
+  <p>Guess the baby’s gender! 👶</p>
+  <button id="boy-btn" class="boy">Boy 💙</button>
+  <button id="girl-btn" class="girl">Girl 💖</button>
+</div>
 
+<div id="poll-results" style="display:none;"></div>
   <canvas id="confetti"></canvas>
 
   <script>
     // Set reveal date & time (YYYY-MM-DDTHH:MM:SS)
-    const revealDate = new Date("2025-08-27T11:01:00").getTime();
+    const revealDate = new Date("2025-09-01T18:00:00").getTime();
 
     const countdownElement = document.getElementById("countdown");
     const revealElement = document.getElementById("reveal");
@@ -118,6 +163,34 @@
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     });
-  </script>
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, doc, updateDoc, getDoc, setDoc, onSnapshot } 
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  // 🔑 Replace these values with YOUR Firebase config from Step 2
+  const firebaseConfig = {
+    apiKey: "AIzaSyAGQaQf4GwCHs-gQZJ2aor0Q058Sh5v868",
+  authDomain: "baby-reveal-a80fd.firebaseapp.com",
+  projectId: "baby-reveal-a80fd",
+  storageBucket: "baby-reveal-a80fd.firebasestorage.app",
+  messagingSenderId: "29615502937",
+  appId: "1:29615502937:web:47d92b7229487e308ea348"
+};
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Make it accessible to other JS code
+  window.db = db;
+  window.doc = doc;
+  window.updateDoc = updateDoc;
+  window.getDoc = getDoc;
+  window.setDoc = setDoc;
+  window.onSnapshot = onSnapshot;
+</script>
+  <script src="script.js"></script>
 </body>
 </html>
